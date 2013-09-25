@@ -30,14 +30,11 @@ namespace Test.App
     
         async private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //var folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
-            //var file = await folder.GetFileAsync(@"assets\eraserewind.mp3");
-            //var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
+            var folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+            var file = await folder.GetFileAsync(@"assets\eraserewind.mp3");
+            var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
           
-            //wc.SetBytestream(stream);
-
-            wc.SetBytestream("eraserewind.mp3");
-
+            wc.SetBytestream(stream);
         }
 
         // Sample code for building a localized ApplicationBar

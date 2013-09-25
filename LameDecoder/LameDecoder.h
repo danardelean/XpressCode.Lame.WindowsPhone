@@ -16,7 +16,7 @@ namespace LameDecoder
     public:
         DecoderComponent();
 		virtual ~DecoderComponent(void);
-		void SetBytestream(Platform::String^ fileName);
+		void SetBytestream(IRandomAccessStream^ streamHandle);
 		void Initialize();
 		void Cleanup();
 		property Platform::String^ Version;
