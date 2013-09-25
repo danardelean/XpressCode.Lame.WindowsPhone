@@ -28,3 +28,8 @@ C:\Users\Dan\Desktop\Lame.WindowsPhone\Test.App\obj\ARM\Debug\Test.App.Resources
 C:\Users\Dan\Desktop\Lame.WindowsPhone\Test.App\obj\ARM\Debug\Test.App.csproj.GenerateResource.Cache
 C:\Users\Dan\Desktop\Lame.WindowsPhone\Test.App\obj\ARM\Debug\Test.App.dll
 C:\Users\Dan\Desktop\Lame.WindowsPhone\Test.App\obj\ARM\Debug\Test.App.pdb
+E:\SRC\Lame.WindowsPhone\Test.App\obj\ARM\Debug\App.g.cs
+E:\SRC\Lame.WindowsPhone\Test.App\obj\ARM\Debug\MainPage.g.cs
+E:\SRC\Lame.WindowsPhone\Test.App\obj\ARM\Debug\Test.App.g.resources
+E:\SRC\Lame.WindowsPhone\Test.App\obj\ARM\Debug\Test.App.Resources.AppResources.resources
+E:\SRC\Lame.WindowsPhone\Test.App\obj\ARM\Debug\Test.App.csproj.GenerateResource.Cache

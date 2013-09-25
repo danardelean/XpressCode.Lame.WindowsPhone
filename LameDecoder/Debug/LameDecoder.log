@@ -1,9 +1,22 @@
-﻿Build started 25/09/2013 14:43:51.
+﻿Build started 25/09/2013 18:59:01.
      1>Project "E:\SRC\Lame.WindowsPhone\LameDecoder\LameDecoder.vcxproj" on node 2 (Build target(s)).
-     1>Link:
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\CL.exe /c /IE:\SRC\Lame.WindowsPhone\LameDecoder\ /I"Generated Files\\" /IDebug\ /AI"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata" /ZI /ZW /ZW:nostdlib /nologo /W3 /WX- /sdl /MP /Od /Oy- /D _WINRT_DLL /D _WINDLL /D _UNICODE /D UNICODE /D _DEBUG /D WINAPI_FAMILY=WINAPI_FAMILY_PHONE_APP /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"pch.h" /Fp"Debug\LameDecoder.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /FU"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\lib\platform.winmd" /FU"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata\Windows.winmd" /analyze- /errorReport:prompt LameDecoder.cpp
+         LameDecoder.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\SRC\Lame.WindowsPhone\Debug\LameDecoder\LameDecoder.dll" /INCREMENTAL /NOLOGO "E:\SRC\Lame.WindowsPhone\Debug\LameDecoder\\..\libmp3lame-static-wp8\libmp3lame-static-wp8.lib" XAPOBase.lib xaudio2.lib WindowsPhoneCore.lib RuntimeObject.lib PhoneAppModelHost.lib /NODEFAULTLIB:ole32.lib /MANIFEST:NO /DEBUG /PDB:"E:\SRC\Lame.WindowsPhone\Debug\LameDecoder\LameDecoder.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /WINMD /WINMDFILE:"E:\SRC\Lame.WindowsPhone\Debug\LameDecoder\LameDecoder.winmd" /DYNAMICBASE /NXCOMPAT /MACHINE:X86 /DLL Debug\FFTSampleAggregator.obj
+         Debug\LameDecoder.obj
+         Debug\pch.obj
+         Debug\SpectrumAnalyzerXAPO.obj
+         XAPOBase.lib(xapobase.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
+     1>LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification
+     1>FFTSampleAggregator.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
+            Creating library E:\SRC\Lame.WindowsPhone\Debug\LameDecoder\LameDecoder.lib and object E:\SRC\Lame.WindowsPhone\Debug\LameDecoder\LameDecoder.exp
+         Generating code
+         Finished generating code
          LameDecoder.vcxproj -> E:\SRC\Lame.WindowsPhone\Debug\LameDecoder\LameDecoder.dll
      1>Done Building Project "E:\SRC\Lame.WindowsPhone\LameDecoder\LameDecoder.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.06
+Time Elapsed 00:00:00.88

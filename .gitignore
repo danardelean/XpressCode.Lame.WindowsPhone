@@ -2,3 +2,7 @@
 *.ipch
 *.sdf
 *.pdb
+*.obj
+*.idb
+*.tlog
+*.xap

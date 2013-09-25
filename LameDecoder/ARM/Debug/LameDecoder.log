@@ -1,0 +1,27 @@
+﻿Build started 25/09/2013 19:02:30.
+     1>Project "E:\SRC\Lame.WindowsPhone\LameDecoder\LameDecoder.vcxproj" on node 2 (Rebuild target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\x86_arm\CL.exe /c /IE:\SRC\Lame.WindowsPhone\LameDecoder\ /I"Generated Files\\" /IARM\Debug\ /AI"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata" /Zi /ZW /ZW:nostdlib /nologo /W3 /WX- /sdl /MP /Od /Oy- /D _WINRT_DLL /D _WINDLL /D _UNICODE /D UNICODE /D _DEBUG /D WINAPI_FAMILY=WINAPI_FAMILY_PHONE_APP /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"pch.h" /Fp"ARM\Debug\LameDecoder.pch" /Fo"ARM\Debug\\" /Fd"ARM\Debug\vc110.pdb" /Gd /TP /FU"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\lib\arm\platform.winmd" /FU"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata\Windows.winmd" /analyze- /errorReport:prompt pch.cpp
+         pch.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\x86_arm\CL.exe /c /IE:\SRC\Lame.WindowsPhone\LameDecoder\ /I"Generated Files\\" /IARM\Debug\ /AI"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata" /Zi /ZW /ZW:nostdlib /nologo /W3 /WX- /sdl /MP /Od /Oy- /D _WINRT_DLL /D _WINDLL /D _UNICODE /D UNICODE /D _DEBUG /D WINAPI_FAMILY=WINAPI_FAMILY_PHONE_APP /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"pch.h" /Fp"ARM\Debug\LameDecoder.pch" /Fo"ARM\Debug\\" /Fd"ARM\Debug\vc110.pdb" /Gd /TP /FU"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\lib\arm\platform.winmd" /FU"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata\Windows.winmd" /analyze- /errorReport:prompt FFTSampleAggregator.cpp LameDecoder.cpp SpectrumAnalyzerXAPO.cpp
+         FFTSampleAggregator.cpp
+         LameDecoder.cpp
+         SpectrumAnalyzerXAPO.cpp
+     1>SpectrumAnalyzerXAPO.cpp(224): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>SpectrumAnalyzerXAPO.cpp(238): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>SpectrumAnalyzerXAPO.cpp(239): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\x86_arm\link.exe /ERRORREPORT:PROMPT /OUT:"E:\SRC\Lame.WindowsPhone\ARM\Debug\LameDecoder\LameDecoder.dll" /INCREMENTAL /NOLOGO "E:\SRC\Lame.WindowsPhone\ARM\Debug\LameDecoder\\..\libmp3lame-static-wp8\libmp3lame-static-wp8.lib" XAPOBase.lib xaudio2.lib WindowsPhoneCore.lib RuntimeObject.lib PhoneAppModelHost.lib /NODEFAULTLIB:ole32.lib /MANIFEST:NO /DEBUG /PDB:"E:\SRC\Lame.WindowsPhone\ARM\Debug\LameDecoder\LameDecoder.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /WINMD /WINMDFILE:"E:\SRC\Lame.WindowsPhone\ARM\Debug\LameDecoder\LameDecoder.winmd" /DYNAMICBASE /NXCOMPAT /MACHINE:ARM /DLL ARM\Debug\FFTSampleAggregator.obj
+         ARM\Debug\LameDecoder.obj
+         ARM\Debug\pch.obj
+         ARM\Debug\SpectrumAnalyzerXAPO.obj
+         XAPOBase.lib(xapobase.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
+     1>LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification
+     1>XAPOBase.lib(oapmatrixmix.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1600' doesn't match value '1700' in FFTSampleAggregator.obj
+            Creating library E:\SRC\Lame.WindowsPhone\ARM\Debug\LameDecoder\LameDecoder.lib and object E:\SRC\Lame.WindowsPhone\ARM\Debug\LameDecoder\LameDecoder.exp
+     1>E:\SRC\Lame.WindowsPhone\ARM\Debug\LameDecoder\LameDecoder.dll : fatal error LNK1319: 1 mismatches detected
+     1>Done Building Project "E:\SRC\Lame.WindowsPhone\LameDecoder\LameDecoder.vcxproj" (Rebuild target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:05.40
