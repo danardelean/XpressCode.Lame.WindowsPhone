@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{6e6ff3c1-842e-4742-9a9e-8d5d636f3abd}</UniqueIdentifier>
+      <Extensions>c</Extensions>
+    </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{8e96b970-cd23-4a1d-8d49-ccc264c1d411}</UniqueIdentifier>
+      <Extensions>h</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\mpglib\common.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mpglib\dct64_i386.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mpglib\decode_i386.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mpglib\huffman.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mpglib\interface.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mpglib\l2tables.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mpglib\layer1.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mpglib\layer2.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mpglib\layer3.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mpglib\mpg123.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mpglib\mpglib.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mpglib\tabinit.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\configMS.h">
+      <Filter>Include</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp" />
+  </ItemGroup>
+</Project>

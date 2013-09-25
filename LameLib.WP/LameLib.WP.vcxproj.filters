@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="LameLib.WP.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Lame\bitstream.c" />
+    <ClCompile Include="Lame\encoder.c" />
+    <ClCompile Include="Lame\fft.c" />
+    <ClCompile Include="Lame\gain_analysis.c" />
+    <ClCompile Include="Lame\id3tag.c" />
+    <ClCompile Include="Lame\lame.c" />
+    <ClCompile Include="Lame\mpglib_interface.c" />
+    <ClCompile Include="Lame\newmdct.c" />
+    <ClCompile Include="Lame\presets.c" />
+    <ClCompile Include="Lame\psymodel.c" />
+    <ClCompile Include="Lame\quantize.c" />
+    <ClCompile Include="Lame\quantize_pvt.c" />
+    <ClCompile Include="Lame\reservoir.c" />
+    <ClCompile Include="Lame\set_get.c" />
+    <ClCompile Include="Lame\tables.c" />
+    <ClCompile Include="Lame\takehiro.c" />
+    <ClCompile Include="Lame\util.c" />
+    <ClCompile Include="Lame\vbrquantize.c" />
+    <ClCompile Include="Lame\VbrTag.c" />
+    <ClCompile Include="Lame\version.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="LameLib.WP.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="Lame\bitstream.h" />
+    <ClInclude Include="Lame\encoder.h" />
+    <ClInclude Include="Lame\fft.h" />
+    <ClInclude Include="Lame\gain_analysis.h" />
+    <ClInclude Include="Lame\id3tag.h" />
+    <ClInclude Include="Lame\newmdct.h" />
+    <ClInclude Include="Lame\psymodel.h" />
+    <ClInclude Include="Lame\quantize.h" />
+    <ClInclude Include="Lame\quantize_pvt.h" />
+    <ClInclude Include="Lame\reservoir.h" />
+    <ClInclude Include="Lame\set_get.h" />
+    <ClInclude Include="Lame\tables.h" />
+    <ClInclude Include="Lame\util.h" />
+    <ClInclude Include="Lame\vbrquantize.h" />
+    <ClInclude Include="Lame\VbrTag.h" />
+    <ClInclude Include="Lame\version.h" />
+    <ClInclude Include="Lame\lame.h" />
+    <ClInclude Include="Lame\machine.h" />
+    <ClInclude Include="Lame\lame_global_flags.h" />
+  </ItemGroup>
+</Project>

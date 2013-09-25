@@ -1,0 +1,15 @@
+﻿<xapCache source="E:\SRC\Lame.WindowsPhone\Test.App\Bin\x86\Debug\Test.App_Debug_x86.xap" wasSigned="False" wasTritonized="False" certificateThumbprint="" TimeStampUrl="" signKeyFile="" signKeyPassword="" lastWriteTime="25/09/2013 14:41:42">
+  <file source="E:\SRC\Lame.WindowsPhone\Test.App\obj\x86\Debug\Test.App.dll" archivePath="Test.App.dll" lastWriteTime="25/09/2013 14:41:41" />
+  <file source="E:\SRC\Lame.WindowsPhone\Test.App\Assets\AlignmentGrid.png" archivePath="Assets\AlignmentGrid.png" lastWriteTime="24/09/2013 15:39:17" />
+  <file source="E:\SRC\Lame.WindowsPhone\Test.App\Assets\eraserewind.mp3" archivePath="Assets\eraserewind.mp3" lastWriteTime="23/09/2013 14:12:32" />
+  <file source="E:\SRC\Lame.WindowsPhone\Test.App\Assets\Tiles\FlipCycleTileLarge.png" archivePath="Assets\Tiles\FlipCycleTileLarge.png" lastWriteTime="24/09/2013 15:39:17" />
+  <file source="E:\SRC\Lame.WindowsPhone\Test.App\Assets\Tiles\FlipCycleTileSmall.png" archivePath="Assets\Tiles\FlipCycleTileSmall.png" lastWriteTime="24/09/2013 15:39:17" />
+  <file source="E:\SRC\Lame.WindowsPhone\Test.App\Assets\Tiles\IconicTileMediumLarge.png" archivePath="Assets\Tiles\IconicTileMediumLarge.png" lastWriteTime="24/09/2013 15:39:17" />
+  <file source="E:\SRC\Lame.WindowsPhone\Test.App\Assets\Tiles\IconicTileSmall.png" archivePath="Assets\Tiles\IconicTileSmall.png" lastWriteTime="24/09/2013 15:39:17" />
+  <file source="E:\SRC\Lame.WindowsPhone\Test.App\Bin\x86\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="25/09/2013 10:12:46" />
+  <file source="E:\SRC\Lame.WindowsPhone\Test.App\Bin\x86\Debug\Assets\ApplicationIcon.png" archivePath="Assets\ApplicationIcon.png" lastWriteTime="24/09/2013 15:39:17" />
+  <file source="E:\SRC\Lame.WindowsPhone\Test.App\Bin\x86\Debug\Assets\Tiles\FlipCycleTileMedium.png" archivePath="Assets\Tiles\FlipCycleTileMedium.png" lastWriteTime="24/09/2013 15:39:17" />
+  <file source="E:\SRC\Lame.WindowsPhone\Debug\LameDecoder\LameDecoder.winmd" archivePath="LameDecoder.winmd" lastWriteTime="25/09/2013 14:41:41" />
+  <file source="E:\SRC\Lame.WindowsPhone\Debug\LameDecoder\LameDecoder.dll" archivePath="LameDecoder.dll" lastWriteTime="25/09/2013 14:41:41" />
+  <file source="E:\SRC\Lame.WindowsPhone\Test.App\Bin\x86\Debug\Properties\WMAppManifest.xml" archivePath="WMAppManifest.xml" lastWriteTime="25/09/2013 10:12:47" />
+</xapCache>

@@ -1,0 +1,50 @@
+﻿Build started 24/09/2013 14:53:22.
+     1>Project "C:\Users\Dan\Desktop\LameEncoder.Component\LameLib.WP\LameLib.WP.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\CL.exe /c /AI"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata" /ZI /nologo /W1 /WX- /Od /Oy- /D _LIB /D WINAPI_FAMILY=WINAPI_FAMILY_PHONE_APP /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"pch.h" /Fp"Debug\LameLib.WP.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TC /analyze- /errorReport:prompt Lame\VbrTag.c Lame\bitstream.c Lame\encoder.c Lame\fft.c Lame\gain_analysis.c Lame\id3tag.c Lame\lame.c Lame\mpglib_interface.c Lame\newmdct.c Lame\presets.c Lame\psymodel.c Lame\quantize.c Lame\quantize_pvt.c Lame\reservoir.c Lame\set_get.c Lame\tables.c Lame\takehiro.c Lame\util.c Lame\vbrquantize.c Lame\version.c
+         version.c
+     1>c:\users\dan\desktop\lameencoder.component\lamelib.wp\lame\version.c : fatal error C1853: 'Debug\LameLib.WP.pch' precompiled header file is from a previous version of the compiler, or the precompiled header is C++ and you are using it from C (or vice versa)
+         vbrquantize.c
+     1>c:\users\dan\desktop\lameencoder.component\lamelib.wp\lame\vbrquantize.c : fatal error C1853: 'Debug\LameLib.WP.pch' precompiled header file is from a previous version of the compiler, or the precompiled header is C++ and you are using it from C (or vice versa)
+         util.c
+     1>c:\users\dan\desktop\lameencoder.component\lamelib.wp\lame\util.c : fatal error C1853: 'Debug\LameLib.WP.pch' precompiled header file is from a previous version of the compiler, or the precompiled header is C++ and you are using it from C (or vice versa)
+         takehiro.c
+     1>c:\users\dan\desktop\lameencoder.component\lamelib.wp\lame\takehiro.c : fatal error C1853: 'Debug\LameLib.WP.pch' precompiled header file is from a previous version of the compiler, or the precompiled header is C++ and you are using it from C (or vice versa)
+         tables.c
+     1>c:\users\dan\desktop\lameencoder.component\lamelib.wp\lame\tables.c : fatal error C1853: 'Debug\LameLib.WP.pch' precompiled header file is from a previous version of the compiler, or the precompiled header is C++ and you are using it from C (or vice versa)
+         set_get.c
+     1>c:\users\dan\desktop\lameencoder.component\lamelib.wp\lame\set_get.c : fatal error C1853: 'Debug\LameLib.WP.pch' precompiled header file is from a previous version of the compiler, or the precompiled header is C++ and you are using it from C (or vice versa)
+         reservoir.c
+     1>c:\users\dan\desktop\lameencoder.component\lamelib.wp\lame\reservoir.c : fatal error C1853: 'Debug\LameLib.WP.pch' precompiled header file is from a previous version of the compiler, or the precompiled header is C++ and you are using it from C (or vice versa)
+         quantize_pvt.c
+     1>c:\users\dan\desktop\lameencoder.component\lamelib.wp\lame\quantize_pvt.c : fatal error C1853: 'Debug\LameLib.WP.pch' precompiled header file is from a previous version of the compiler, or the precompiled header is C++ and you are using it from C (or vice versa)
+         quantize.c
+     1>c:\users\dan\desktop\lameencoder.component\lamelib.wp\lame\quantize.c : fatal error C1853: 'Debug\LameLib.WP.pch' precompiled header file is from a previous version of the compiler, or the precompiled header is C++ and you are using it from C (or vice versa)
+         psymodel.c
+     1>c:\users\dan\desktop\lameencoder.component\lamelib.wp\lame\psymodel.c : fatal error C1853: 'Debug\LameLib.WP.pch' precompiled header file is from a previous version of the compiler, or the precompiled header is C++ and you are using it from C (or vice versa)
+         presets.c
+     1>c:\users\dan\desktop\lameencoder.component\lamelib.wp\lame\presets.c : fatal error C1853: 'Debug\LameLib.WP.pch' precompiled header file is from a previous version of the compiler, or the precompiled header is C++ and you are using it from C (or vice versa)
+         newmdct.c
+     1>c:\users\dan\desktop\lameencoder.component\lamelib.wp\lame\newmdct.c : fatal error C1853: 'Debug\LameLib.WP.pch' precompiled header file is from a previous version of the compiler, or the precompiled header is C++ and you are using it from C (or vice versa)
+         mpglib_interface.c
+     1>c:\users\dan\desktop\lameencoder.component\lamelib.wp\lame\mpglib_interface.c : fatal error C1853: 'Debug\LameLib.WP.pch' precompiled header file is from a previous version of the compiler, or the precompiled header is C++ and you are using it from C (or vice versa)
+         lame.c
+     1>c:\users\dan\desktop\lameencoder.component\lamelib.wp\lame\lame.c : fatal error C1853: 'Debug\LameLib.WP.pch' precompiled header file is from a previous version of the compiler, or the precompiled header is C++ and you are using it from C (or vice versa)
+         id3tag.c
+     1>c:\users\dan\desktop\lameencoder.component\lamelib.wp\lame\id3tag.c : fatal error C1853: 'Debug\LameLib.WP.pch' precompiled header file is from a previous version of the compiler, or the precompiled header is C++ and you are using it from C (or vice versa)
+         gain_analysis.c
+     1>c:\users\dan\desktop\lameencoder.component\lamelib.wp\lame\gain_analysis.c : fatal error C1853: 'Debug\LameLib.WP.pch' precompiled header file is from a previous version of the compiler, or the precompiled header is C++ and you are using it from C (or vice versa)
+         fft.c
+     1>c:\users\dan\desktop\lameencoder.component\lamelib.wp\lame\fft.c : fatal error C1853: 'Debug\LameLib.WP.pch' precompiled header file is from a previous version of the compiler, or the precompiled header is C++ and you are using it from C (or vice versa)
+         encoder.c
+     1>c:\users\dan\desktop\lameencoder.component\lamelib.wp\lame\encoder.c : fatal error C1853: 'Debug\LameLib.WP.pch' precompiled header file is from a previous version of the compiler, or the precompiled header is C++ and you are using it from C (or vice versa)
+         bitstream.c
+     1>c:\users\dan\desktop\lameencoder.component\lamelib.wp\lame\bitstream.c : fatal error C1853: 'Debug\LameLib.WP.pch' precompiled header file is from a previous version of the compiler, or the precompiled header is C++ and you are using it from C (or vice versa)
+         VbrTag.c
+     1>c:\users\dan\desktop\lameencoder.component\lamelib.wp\lame\vbrtag.c : fatal error C1853: 'Debug\LameLib.WP.pch' precompiled header file is from a previous version of the compiler, or the precompiled header is C++ and you are using it from C (or vice versa)
+         Generating Code...
+     1>Done Building Project "C:\Users\Dan\Desktop\LameEncoder.Component\LameLib.WP\LameLib.WP.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.36

@@ -1,0 +1,9 @@
+﻿Build started 25/09/2013 14:40:07.
+     1>Project "E:\SRC\Lame.WindowsPhone\lame-3.99.5\libmp3lame-static-wp8\libmp3lame-static-wp8.vcxproj" on node 2 (Build target(s)).
+     1>Lib:
+         libmp3lame-static-wp8.vcxproj -> E:\SRC\Lame.WindowsPhone\Debug\libmp3lame-static-wp8\libmp3lame-static-wp8.lib
+     1>Done Building Project "E:\SRC\Lame.WindowsPhone\lame-3.99.5\libmp3lame-static-wp8\libmp3lame-static-wp8.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.09
