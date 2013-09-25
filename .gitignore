@@ -6,3 +6,8 @@
 *.idb
 *.tlog
 *.xap
+*.lib
+*.exp
+*.log
+[Dd]ebug*/
+*.opensdf
