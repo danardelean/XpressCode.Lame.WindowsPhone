@@ -46,16 +46,15 @@ namespace LameDecoder
 	}
 
 DecoderComponent::DecoderComponent()
+	:m_isPlaying(false),novoice(false)
 {
 
 
 }
-void DecoderComponent::Initialize()
+
+
+void DecoderComponent::Initialize(int Channels,int SamplesPerSec,int BitRate)
 {
-	gfp=lame_init();
-	int const v_main = 2 - lame_get_version(gfp);
-	int ret = lame_init_params(gfp);
-	int decodeOnly=lame_get_decode_only(gfp);
 
 	//XAudio2 Init
 	m_musicMasteringVoice=nullptr;
@@ -88,7 +87,62 @@ void DecoderComponent::Initialize()
 	m_RenderThreadExitHandle=CreateEventEx(nullptr, nullptr, CREATE_EVENT_MANUAL_RESET, WRITE_OWNER | EVENT_ALL_ACCESS);
 	ResetEvent(m_RenderThreadExitHandle);
 
+
+	WAVEFORMATEX  waveFormat; 
+	waveFormat.wFormatTag = WAVE_FORMAT_PCM; 
+	waveFormat.nChannels = Channels; 
+	waveFormat.nSamplesPerSec = SamplesPerSec; 
+	waveFormat.wBitsPerSample = 16; 
+	waveFormat.nBlockAlign = waveFormat.nChannels * (waveFormat.wBitsPerSample/8); 
+	waveFormat.nAvgBytesPerSec = waveFormat.nSamplesPerSec * waveFormat.nBlockAlign; 
+	waveFormat.cbSize = 0; 
+
+	//initialize pWAV
+
+	callback=new StreamingVoiceCallback (this);
+
+	ThrowIfFailed(
+		m_musicEngine->CreateSourceVoice(
+		&m_musicSourceVoice, &waveFormat, 0, 1.0f, callback, nullptr)
+		);
+
+	pSpectrumAnalyzerXAPO = new SpectrumAnalyzerXAPO();
+
+
+	XAUDIO2_EFFECT_DESCRIPTOR descriptor;
+	descriptor.InitialState = true;
+	descriptor.OutputChannels = waveFormat.nChannels;
+	descriptor.pEffect = pSpectrumAnalyzerXAPO;
+
+	XAUDIO2_EFFECT_CHAIN chain;
+	chain.EffectCount = 1;
+	chain.pEffectDescriptors = &descriptor;
+
+
+	ThrowIfFailed(
+		m_musicSourceVoice->SetEffectChain(&chain)
+		);
+
+	ThrowIfFailed(
+		novoice?m_musicSourceVoice->EnableEffect(0, 0):m_musicSourceVoice->DisableEffect(0, 0)
+		);
+
+
+	if (m_musicSourceVoice!=nullptr)
+		ThrowIfFailed(m_musicSourceVoice->Start());
+
+
+	gfp=lame_init();
+	//int const v_main = 2 - lame_get_version(gfp);
+	int ret = lame_init_params(gfp);
+	int decodeOnly=lame_get_decode_only(gfp);
+
+	hip = hip_decode_init();
+
 }
+
+
+
 
 void DecoderComponent::Cleanup()
 {
@@ -99,8 +153,8 @@ void DecoderComponent::Cleanup()
 		m_bExitFromRenderThreadFlag=TRUE;
 		SetEvent(m_musicRenderThreadHandle);
 		//wait for render thread exit
-		WaitForSingleObjectEx(m_RenderThreadExitHandle,INFINITE,TRUE);
-		ResetEvent(m_RenderThreadExitHandle);
+		//WaitForSingleObjectEx(m_RenderThreadExitHandle,INFINITE,TRUE);
+		//ResetEvent(m_RenderThreadExitHandle);
 		m_musicSourceVoice=nullptr;
 		CloseHandle(m_musicRenderThreadHandle);
 	}
@@ -127,6 +181,8 @@ void DecoderComponent::Cleanup()
 		assert(m_musicEngine->Release()==0);
 		m_musicEngine=nullptr;
 	};
+
+	hip_decode_exit(hip);
 }
 
 DecoderComponent::~DecoderComponent(void)
@@ -136,284 +192,143 @@ DecoderComponent::~DecoderComponent(void)
 
 }
 
-#define OUTSIZE_UNCLIPPED (1152*2*sizeof(FLOAT))
-#define BUF_SIZE 512
-#define INBUF_SIZE 4096
-#define MP3BUF_SIZE (int)(1.25 * BUF_SIZE) + 7200
+static const int BUFFER_COUNT=5;
 
-void DecoderComponent::SetBytestream(Platform::String^ fileName)
+bool DecoderComponent::Play(const Platform::Array<byte>^ bytes,int Channels,int SamplesPerSec,int BitRate)
 {
-	const int MP3_SIZE = 1024;
-	const int PCM_SIZE = 1152;
-	int read, i, samples,total_bytes;
+	if (m_isPlaying)
+		return false;
+
+	Initialize(Channels,SamplesPerSec,BitRate);
+
+	m_isPlaying=true;
+
+	int mp3_len;
+	mp3_len=bytes->Length;
+	byte* mp3=(byte*)malloc(sizeof(byte)*mp3_len);
+	memcpy(mp3,bytes->Data,sizeof(byte)*mp3_len);	
 
 
-
-
-	//const wchar_t *W = mp3Source->Data();
-	//int Size = wcslen( W );
-	//char *source= new char[Size + 1];
-	//source[ Size ] = 0;
-	//for(int y=0;y<Size; y++)
-	//	source[y] = (char)W[y];
-
-	//FILE  * mp3fp;
-	//fopen_s(&mp3fp,source ,  "RB" );  
-
-
-	auto mp3Source =  Windows::ApplicationModel::Package::Current->InstalledLocation->Path+"\\assets\\"+fileName;	
-	wchar_t  source[MAX_PATH];
-	wcscpy_s( source, MAX_PATH, mp3Source->Data());
-
-	FILE  *mp3;
-	_wfopen_s(&mp3,source,L"rb");  
-
-	auto pcmOutput =  ApplicationData::Current->LocalFolder->Path+"\\out1.pcm";
-	wchar_t destination[MAX_PATH];
-	wcscpy_s( destination, MAX_PATH, pcmOutput->Data());
-
-	FILE  * pcm;
-	_wfopen_s(&pcm,destination,L"wb");  
-
-	short int pcm_l[PCM_SIZE], pcm_r[PCM_SIZE];
-	unsigned char mp3_buffer[MP3_SIZE];
-
-
-	hip_t hip = hip_decode_init ();  
-
-	mp3data_struct mp3data, mp3data_bak;
-	memset(&mp3data, 0, sizeof(mp3data));
-	memcpy(&mp3data_bak, &mp3data, sizeof(mp3data));
-
-	int nChannels = -1;
-	int nSampleRate = -1;
-	int mp3_len, debug_count, read_count = 0, total_frames = 0;
-	total_bytes=0;
-	while( (read = fread(mp3_buffer, 1, MP3_SIZE, mp3)) > 0 )
+	concurrency::create_async([this,mp3,mp3_len]()
 	{
-		read_count++;
-		mp3_len = read;
+		int nChannels = -1;
+		int nSampleRate = -1;
+		int read, i, samples;
+		int debug_count, read_count = 0, total_frames = 0;
+		const int PCM_SIZE = 1152;
+		short int pcm_l[PCM_SIZE], pcm_r[PCM_SIZE], pcm_mixed[10][PCM_SIZE*2];
+
 		debug_count = 0;
+		samples = 0;
+		int position = 0;
+		int current_buffer = 0;
+
+		mp3data_struct mp3data;
+		memset(&mp3data, 0, sizeof(mp3data));
+
 		do 
 		{
-			samples = hip_decode1_headers(hip, mp3_buffer, mp3_len, pcm_l, pcm_r, &mp3data);
+			samples = hip_decode1_headers(hip, mp3 + position, 0, pcm_l, pcm_r, &mp3data);
+			if (samples == 0) {
+				samples = hip_decode1_headers(hip, mp3 + position, position < mp3_len ? 1024 : mp3_len - position -1, pcm_l, pcm_r, &mp3data);
+				position +=1024;
+			}
+			//	samples = hip_decode1_headers(hip, mp3 , position < mp3_len ? 1024 : mp3_len - position -1, pcm_l, pcm_r, &mp3data);
+
 			if(mp3data.header_parsed == 1)
 			{
 				if(nChannels < 0)
-				{
 					printf("header parsed. channels=%d, samplerate=%d\n", mp3data.stereo, mp3data.samplerate);
-				}
 				else
 				{
 					if(nChannels != mp3data.stereo || nSampleRate != mp3data.samplerate)
-					{
-						printf("channels changed. channels=%d->%d, samplerate=%d->%d\n", 
-							nChannels, mp3data.stereo, nSampleRate, mp3data.samplerate);
-					}
+						printf("channels changed. channels=%d->%d, samplerate=%d->%d\n",nChannels, mp3data.stereo, nSampleRate, mp3data.samplerate);
 				}
 				nChannels = mp3data.stereo;
-				nSampleRate = mp3data.samplerate;			
+				nSampleRate = mp3data.samplerate;		
 			}
 			if(samples > 0 && mp3data.header_parsed != 1)
 			{
 				fprintf(stderr, "lame decode error, samples=%d, but header not parsed yet\n", samples);
 				break;
 			}
-			if(samples > 0)
+			if((samples > 0)&&(m_isPlaying))
 			{
-				for(i = 0; i < samples; i++)
+				XAUDIO2_VOICE_STATE state;
+				//queue is full, skip and wait again
+				do 
 				{
-					fwrite((char*)&pcm_l[i], 1, sizeof(pcm_l[i]), pcm);
-					if(nChannels == 2)
-						fwrite((char*)&pcm_r[i], 1, sizeof(pcm_r[i]), pcm);
-				}
-				total_bytes+=samples*((nChannels == 2)?2:1);
-				debug_count++;
+					WaitForSingleObjectEx(m_musicRenderThreadHandle,INFINITE,TRUE);
+					m_musicSourceVoice->GetState(&state);
+					if (state.BuffersQueued>=BUFFER_COUNT)
+						ResetEvent(m_musicRenderThreadHandle);
+				}while(state.BuffersQueued>=BUFFER_COUNT);
 
+				XAUDIO2_BUFFER abuf = {0};
+				//if(nChannels == 2)
+				abuf.AudioBytes = samples * sizeof(pcm_l[0]) *2;
+				for(int j=0; j< samples;j++) {
+					pcm_mixed[current_buffer][j*2]=pcm_l[j];
+					pcm_mixed[current_buffer][j*2+1]=pcm_r[j];
+				}
+				abuf.pAudioData =(byte*) pcm_mixed[current_buffer];
+
+				current_buffer++;
+				current_buffer%=10;
+
+				ThrowIfFailed(m_musicSourceVoice->SubmitSourceBuffer(&abuf));
+
+				debug_count++;
 				if(samples % mp3data.framesize != 0)
 					printf("error: not mod samples. samples=%d, framesize=%d\n", samples, mp3data.framesize);
 				total_frames += (samples / mp3data.framesize);
 			}
+		} while ((samples > 0 || position < mp3_len)&&m_isPlaying);
+		Cleanup();
 
-			/* future calls to decodeMP3 are just to flush buffers */
-			mp3_len = 0;
-
-		} while (samples > 0);
-
-		if(debug_count >= 10)
-			printf("debug_count=%d, read_count=%d\n", debug_count, read_count);
-	}
-	printf("total frames = %d\n", total_frames);
-	fclose(pcm);
-	fclose(mp3);
-	hip_decode_exit(hip);
-
-
-
-	/*concurrency::create_async([this,streamHandle]()
-	{*/
-	//Streams::Buffer^ bb = ref new Streams::Buffer(streamHandle->Size);
-	//create_task(streamHandle->ReadAsync(bb,streamHandle->Size,InputStreamOptions::None)).wait();
-	//
-
-	//Microsoft::WRL::ComPtr< Windows::Storage::Streams::IBufferByteAccess > buffer_byte_access;
-	//reinterpret_cast< IUnknown* >( bb )->QueryInterface( IID_PPV_ARGS( &buffer_byte_access ) ) ;
-	//byte* mp3 = nullptr;
-	//buffer_byte_access->Buffer(&mp3);
-
-	//hip_t hip = hip_decode_init();
-
-
-	//
-	//auto reader = ::Windows::Storage::Streams::DataReader::FromBuffer(bb);
-
-	//
-	//mp3data_struct mp3data;
-	//memset(&mp3data, 0, sizeof(mp3data));
-
-	//int nChannels = -1;
-	//int nSampleRate = -1;
-	//int read, i, samples;
-	//int mp3_len, debug_count,debug_bytes, read_count = 0, total_frames = 0;
-
-	//short pcm_l[INBUF_SIZE];
-	//short pcm_r[INBUF_SIZE];
-	//static const int BUFFER_COUNT=3;
-
-
-	////int numdec=hip_decode1_headers(decoder,mp3,streamHandle->Size,pcm_l_buf,pcm_r_buf,&mp3data);
-	//mp3_len = streamHandle->Size;
-	//debug_count = 0;
-	//debug_bytes = 0;
-	//bool parsed_headers=false;
-
-	//auto appInstallDirectory =  Windows::ApplicationModel::Package::Current->InstalledLocation->Path+"\\out1.pcm";
-
-
-	//FILE  * wavfp;
-	//fopen_s(&wavfp, "out1.pcm" ,  "WB" );  
-	//   if  (! wavfp)   
-	//	return;
-
-
-
-
-
-
-	//do 
-	//{
-
-
-	//	samples = hip_decode1_headers(hip, mp3, mp3_len, pcm_l, pcm_r, &mp3data);
-	//	
-	//	if(mp3data.header_parsed == 1)
-	//	{
-	//		if(nChannels < 0)
-	//			printf("header parsed. channels=%d, samplerate=%d\n", mp3data.stereo, mp3data.samplerate);
-	//		else
-	//		{
-	//			if(nChannels != mp3data.stereo || nSampleRate != mp3data.samplerate)
-	//				printf("channels changed. channels=%d->%d, samplerate=%d->%d\n",nChannels, mp3data.stereo, nSampleRate, mp3data.samplerate);
-	//		}
-	//		nChannels = mp3data.stereo;
-	//		nSampleRate = mp3data.samplerate;		
-	//		if (!parsed_headers)
-	//		{
-	//			parsed_headers=true;
-	//			InitializeXAudio2(mp3data.stereo, mp3data.samplerate,mp3data.bitrate);
-	//		}
-
-	//	}
-	//	if(samples > 0 && mp3data.header_parsed != 1)
-	//	{
-	//		fprintf(stderr, "lame decode error, samples=%d, but header not parsed yet\n", samples);
-	//		break;
-	//	}
-	//	if(samples > 0)
-	//	{
-	//		debug_bytes+=samples;
-	//		for(i = 0; i < samples; i++)
-	//		{
-	//			/*		fwrite((char*)&pcm_l[i], 1, sizeof(pcm_l[i]), pcm);
-	//			if(nChannels == 2)
-	//			fwrite((char*)&pcm_r[i], 1, sizeof(pcm_r[i]), pcm);*/
-	//		}
-
-	//		XAUDIO2_VOICE_STATE state;
-	//		//queue is full, skip and wait again
-	//		do 
-	//		{
-	//			WaitForSingleObjectEx(m_musicRenderThreadHandle,INFINITE,TRUE);
-	//			m_musicSourceVoice->GetState(&state);
-	//			if (state.BuffersQueued>=BUFFER_COUNT)
-	//				ResetEvent(m_musicRenderThreadHandle);
-	//		}while(state.BuffersQueued>=BUFFER_COUNT);
-
-	//		XAUDIO2_BUFFER abuf = {0};
-	//		abuf.AudioBytes = samples;
-	//		abuf.pAudioData =(byte*) &pcm_l;
-
-	//		ThrowIfFailed(m_musicSourceVoice->SubmitSourceBuffer(&abuf));
-
-	//		debug_count++;
-	//		if(samples % mp3data.framesize != 0)
-	//			printf("error: not mod samples. samples=%d, framesize=%d\n", samples, mp3data.framesize);
-	//		total_frames += (samples / mp3data.framesize);
-	//	}
-	//	/* future calls to decodeMP3 are just to flush buffers */
-	//	mp3_len = 0;
-	//} while (samples > 0);
-	//	hip_decode_exit(hip);
-	//});
-
+	});
+	return true;
 }
 
-void DecoderComponent::InitializeXAudio2(WORD Channels,DWORD SamplesPerSec,WORD BitsPerSample)
+
+void DecoderComponent::Stop()
 {
-	WAVEFORMATEX  waveFormat; 
-	waveFormat.wFormatTag = WAVE_FORMAT_PCM; 
-	waveFormat.nChannels = Channels; 
-	waveFormat.nSamplesPerSec = SamplesPerSec; 
-	waveFormat.wBitsPerSample = 16; 
-	waveFormat.nBlockAlign = waveFormat.nChannels * (waveFormat.wBitsPerSample/8); 
-	waveFormat.nAvgBytesPerSec = waveFormat.nSamplesPerSec * waveFormat.nBlockAlign; 
-	waveFormat.cbSize = 0; 
-
-	//initialize pWAV
-
-	callback=new StreamingVoiceCallback (this);
-
-	ThrowIfFailed(
-		m_musicEngine->CreateSourceVoice(
-		&m_musicSourceVoice, &waveFormat, 0, 1.0f, callback, nullptr)
-		);
-
-	pSpectrumAnalyzerXAPO = new SpectrumAnalyzerXAPO();
-
-	XAUDIO2_EFFECT_DESCRIPTOR descriptor;
-	descriptor.InitialState = true;
-	descriptor.OutputChannels = waveFormat.nChannels;
-	descriptor.pEffect = pSpectrumAnalyzerXAPO;
-
-
-	XAUDIO2_EFFECT_CHAIN chain;
-	chain.EffectCount = 1;
-	chain.pEffectDescriptors = &descriptor;
-
-
-	ThrowIfFailed(
-		m_musicSourceVoice->SetEffectChain(&chain)
-		);
-
-	ThrowIfFailed(
-		m_musicSourceVoice->DisableEffect(0, 0)
-		);
-
-
-
-	if (m_musicSourceVoice!=nullptr)
-		ThrowIfFailed(m_musicSourceVoice->Start());
+	if (!m_isPlaying)
+		return;
+	
+	m_isPlaying=false;
 }
+
+
+
+
+//void DecoderComponent::SetBytestream(IRandomAccessStream^ streamHandle)
+//{
+//	concurrency::create_async([this,streamHandle]()
+//	{
+//		Streams::Buffer^ bb = ref new Streams::Buffer(streamHandle->Size);
+//		create_task(streamHandle->ReadAsync(bb,streamHandle->Size,InputStreamOptions::None)).wait();
+//		auto reader = ::Windows::Storage::Streams::DataReader::FromBuffer(bb);
+//
+//		Microsoft::WRL::ComPtr< Windows::Storage::Streams::IBufferByteAccess > buffer_byte_access;
+//		reinterpret_cast< IUnknown* >( bb )->QueryInterface( IID_PPV_ARGS( &buffer_byte_access ) ) ;
+//		byte* mp3 = nullptr;
+//		buffer_byte_access->Buffer(&mp3);
+//
+//
+//
+//
+//
+//
+//
+//		//int numdec=hip_decode1_headers(decoder,mp3,streamHandle->Size,pcm_l_buf,pcm_r_buf,&mp3data);
+//
+//
+//
+//
+//	});
+//
+//}
 
 
 

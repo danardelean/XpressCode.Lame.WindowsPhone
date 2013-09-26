@@ -151,6 +151,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ID3Lib_PCL\ID3Lib_PCL\ID3Lib_PCL.csproj">
+      <Project>{A5D38C40-BAD9-410D-BC8F-21FC04017C28}</Project>
+      <Name>ID3Lib_PCL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LameDecoder\LameDecoder.vcxproj">
       <Project>{4B3225E3-9741-4EBD-8112-D4F5F55F556C}</Project>
       <Name>LameDecoder</Name>

@@ -1,0 +1,7 @@
+E:\SRC\lyriXmatchWindows\ID3Lib_PCL\ID3Lib_PCL\bin\Release\ID3Lib_PCL.dll
+E:\SRC\lyriXmatchWindows\ID3Lib_PCL\ID3Lib_PCL\bin\Release\ID3Lib_PCL.pdb
+E:\SRC\lyriXmatchWindows\ID3Lib_PCL\ID3Lib_PCL\bin\Release\Zlib.Portable.dll
+E:\SRC\lyriXmatchWindows\ID3Lib_PCL\ID3Lib_PCL\bin\Release\Zlib.Portable.pdb
+E:\SRC\lyriXmatchWindows\ID3Lib_PCL\ID3Lib_PCL\obj\Release\ID3Lib_PCL.csprojResolveAssemblyReference.cache
+E:\SRC\lyriXmatchWindows\ID3Lib_PCL\ID3Lib_PCL\obj\Release\ID3Lib_PCL.dll
+E:\SRC\lyriXmatchWindows\ID3Lib_PCL\ID3Lib_PCL\obj\Release\ID3Lib_PCL.pdb
